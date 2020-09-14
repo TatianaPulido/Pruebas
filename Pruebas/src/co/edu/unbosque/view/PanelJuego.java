@@ -71,6 +71,8 @@ public class PanelJuego extends JPanel {
 		txtA_Pregunta.setOpaque(false);
 		txtA_Pregunta.setForeground(Color.WHITE);
 		txtA_Pregunta.setBackground(new Color(0, 0, 0, 0));
+		txtA_Pregunta.setLineWrap(true);
+		txtA_Pregunta.setWrapStyleWord(true);
 		add(txtA_Pregunta);
 
 		btnAyuda50 = new JButton();
@@ -79,7 +81,7 @@ public class PanelJuego extends JPanel {
 		btnAyuda50.setBackground(new Color(0, 0, 0, 0));
 		btnAyuda50.setBorderPainted(false);
 		add(btnAyuda50);
-		btnOpciones= new JButton[4];
+		btnOpciones = new JButton[4];
 		for (int i = 0; i < 4; i++) {
 			btnOpciones[i] = new JButton();
 			btnOpciones[i].setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -87,7 +89,7 @@ public class PanelJuego extends JPanel {
 			btnOpciones[i].setBorderPainted(false);
 			btnOpciones[i].setBackground(new Color(0, 0, 0, 0));
 			add(btnOpciones[i]);
-			}
+		}
 		btnOpciones[0].setBounds(84, 445, 354, 78);
 		btnOpciones[1].setBounds(550, 445, 354, 78);
 		btnOpciones[2].setBounds(84, 558, 354, 78);

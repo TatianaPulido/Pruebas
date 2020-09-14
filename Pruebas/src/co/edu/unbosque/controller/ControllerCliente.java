@@ -29,6 +29,8 @@ public class ControllerCliente extends Thread implements ActionListener {
 	ObjectInputStream in;
 	DataOutputStream out;
 
+	int numero = 0;
+
 	public ControllerCliente() {
 		gui = new View();
 		actionListener(this);
@@ -129,47 +131,69 @@ public class ControllerCliente extends Thread implements ActionListener {
 
 	public void puntaje() {
 
-		String resSele = cuestionario.getRespuestaSeleccionada();
-		String resCorrecta = cuestionario.getRespuestaCorrecta();
+		if (numero < 5) {
 
-		if (resCorrecta.equals(resSele)) {
-			JOptionPane.showMessageDialog(null, "Correcto");
-			jugador.setPuntuacion(jugador.getPuntuacion() + 3);
+			String resSele = cuestionario.getRespuestaSeleccionada();
+			String resCorrecta = cuestionario.getRespuestaCorrecta();
 
-		} else {
-			JOptionPane.showMessageDialog(null, "Incorrecto");
-
-			if (jugador.getPuntuacion() >= 2) {
-				jugador.setPuntuacion(jugador.getPuntuacion() - 2);
+			if (resCorrecta.equals(resSele)) {
+				JOptionPane.showMessageDialog(null, "Correcto");
+				jugador.setPuntuacion(jugador.getPuntuacion() + 3);
 
 			} else {
-				jugador.setPuntuacion(0);
+				JOptionPane.showMessageDialog(null, "Incorrecto");
+
+				if (jugador.getPuntuacion() >= 2) {
+					jugador.setPuntuacion(jugador.getPuntuacion() - 2);
+
+				} else {
+					jugador.setPuntuacion(0);
+				}
 			}
+
+			try {
+
+				out.writeUTF("Respondí");
+				cuestionario = (Cuestionario) in.readObject();
+				gui.getPanelJuego().getTxtA_Pregunta().setText(cuestionario.getPregunta());
+
+				String[] listaRespuestas = new String[4];
+				listaRespuestas = cuestionario.getRespuestas();
+
+				// Mezclar lista de respuestas
+				List<String> lista = Arrays.asList(listaRespuestas);
+				Collections.shuffle(lista);
+				for (int i = 0; i < listaRespuestas.length; i++) {
+					listaRespuestas[i] = lista.get(i).toString();
+					gui.getPanelJuego().getBtnOpciones()[i].setText(listaRespuestas[i]);
+				}
+
+			} catch (IOException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			numero++;
+
+			if (numero == 4) {
+				try {
+					out.writeUTF("5 preguntas respondidad");
+
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
 		}
-
-		try {
-
-			out.writeUTF("Respondí");
-
-			cuestionario = (Cuestionario) in.readObject();
-			gui.getPanelJuego().getTxtA_Pregunta().setText(cuestionario.getPregunta());
-
-			String[] listaRespuestas = new String[4];
-			listaRespuestas = cuestionario.getRespuestas();
-
-			// Mezclar lista de respuestas
-			List<String> lista = Arrays.asList(listaRespuestas);
-			Collections.shuffle(lista);
-			for (int i = 0; i < listaRespuestas.length; i++) {
-				listaRespuestas[i] = lista.get(i).toString();
-				gui.getPanelJuego().getBtnOpciones()[i].setText(listaRespuestas[i]);
+		
+		if(numero == 5) {
+			try {
+				socket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			socket.close();
-
-		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
