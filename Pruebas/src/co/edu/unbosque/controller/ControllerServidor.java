@@ -24,14 +24,27 @@ public class ControllerServidor {
 			servidor = new ServerSocket(5000);
 			int i = 0;
 			while (true) {
+
 				cliente = servidor.accept();
+
 				out = new ObjectOutputStream(cliente.getOutputStream());
 				int indice = (int) (Math.random() * 60 + 1);
 				out.writeObject(archivoPreguntas.preguntas(indice));
-				in = new DataInputStream(cliente.getInputStream());			
-				
-				String continua = in.readUTF();	
+
+				in = new DataInputStream(cliente.getInputStream());
+
+				String continua = in.readUTF();
 				System.out.println(continua);
+
+				continua = in.readUTF();
+
+				if (continua.equals("Respondí")) {
+
+					out.writeObject(archivoPreguntas.preguntas(indice));
+
+					cliente.close();
+				}
+
 			}
 		} catch (IOException e) {
 			System.out.println("SERVIDOR:  Error en la conexión");
@@ -39,5 +52,4 @@ public class ControllerServidor {
 
 	}
 
-	
 }
