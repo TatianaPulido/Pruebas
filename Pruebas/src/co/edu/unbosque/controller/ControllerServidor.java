@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import co.edu.unbosque.model.persistence.ArchivoPreguntas;
 
@@ -31,16 +32,44 @@ public class ControllerServidor {
 
 				String continua = "";
 				do {
-					
-					if(!continua.equals("Terminamos")){
-					int indice = (int) (Math.random() * 60 + 1);
-					out.writeObject(archivoPreguntas.preguntas(indice));
+
+					if (!continua.equals("Terminamos")) {
+
+						ArrayList<Integer> lista = new ArrayList<Integer>();
+						boolean si = false;
+
+						if (lista.size() == 0) {
+
+							int indice = (int) (Math.random() * 60 + 1);
+							out.writeObject(archivoPreguntas.preguntas(indice));
+							lista.add(indice);
+
+						} else {
+							while (!si) {
+
+								int indice = (int) (Math.random() * 60 + 1);
+
+								for (int j = 0; j < lista.size(); j++) {
+
+									if (!lista.get(i).equals(indice)) {
+										lista.add(indice);
+										out.writeObject(archivoPreguntas.preguntas(indice));
+										si = true;
+
+									}
+								}
+							}
+						}
+
 					}
+
 					continua = in.readUTF();
 				} while (!continua.equals("Terminamos"));
+
 				out.close();
 				in.close();
 				cliente.close();
+
 				System.out.println("Conexion Cerrada en servidor");
 
 			}
