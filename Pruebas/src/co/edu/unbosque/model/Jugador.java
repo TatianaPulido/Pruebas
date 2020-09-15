@@ -3,11 +3,13 @@ package co.edu.unbosque.model;
 public class Jugador {
 	private String nombre;
 	private int puntuacion;
+	private int numeroPreguntas;
 
 	public Jugador(String nombre, int puntuacion) {
 		super();
 		this.nombre = nombre;
 		this.puntuacion = puntuacion;
+		this.numeroPreguntas=0;
 	}
 
 	public Jugador() {
@@ -42,6 +44,20 @@ public class Jugador {
 	 */
 	public void setPuntuacion(int puntuacion) {
 		this.puntuacion = puntuacion;
+	}
+
+	/**
+	 * @return the numeroPreguntas
+	 */
+	public int getNumeroPreguntas() {
+		return numeroPreguntas;
+	}
+
+	/**
+	 * @param numeroPreguntas the numeroPreguntas to set
+	 */
+	public void setNumeroPreguntas(int numeroPreguntas) {
+		this.numeroPreguntas = numeroPreguntas;
 	}
 
 }

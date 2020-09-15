@@ -14,9 +14,8 @@ public class ArchivoPreguntas {
 	public ArchivoPreguntas() throws IOException {
 
 		try {
-			archivo=new Properties();
-			InputStream is = new FileInputStream(
-					".\\data\\Preguntas.properties");
+			archivo = new Properties();
+			InputStream is = new FileInputStream(".\\data\\Preguntas.properties");
 			archivo.load(is);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -25,18 +24,13 @@ public class ArchivoPreguntas {
 
 	public Cuestionario preguntas(int indicePregunta) {
 		String pregunta = archivo.getProperty("pregunta" + indicePregunta);
-		String respuestaCorrecta = archivo.getProperty("pregunta"
-				+ indicePregunta + ".respuestaCorrecta");
+		String respuestaCorrecta = archivo.getProperty("pregunta" + indicePregunta + ".respuestaCorrecta");
 		String[] respuestas = new String[4];
-		respuestas[0] =respuestaCorrecta;
-		respuestas[1] = archivo.getProperty("pregunta" + indicePregunta
-				+ ".respuesta1");
-		respuestas[2] = archivo.getProperty("pregunta" + indicePregunta
-				+ ".respuesta2");
-		respuestas[3] = archivo.getProperty("pregunta" + indicePregunta
-				+ ".respuesta3");
-		Cuestionario cuestionario = new Cuestionario(respuestas, pregunta,
-				respuestaCorrecta);
+		respuestas[0] = respuestaCorrecta;
+		respuestas[1] = archivo.getProperty("pregunta" + indicePregunta + ".respuesta1");
+		respuestas[2] = archivo.getProperty("pregunta" + indicePregunta + ".respuesta2");
+		respuestas[3] = archivo.getProperty("pregunta" + indicePregunta + ".respuesta3");
+		Cuestionario cuestionario = new Cuestionario(respuestas, pregunta, respuestaCorrecta);
 		return cuestionario;
 	}
 

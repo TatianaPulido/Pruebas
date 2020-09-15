@@ -58,7 +58,7 @@ public class PanelJuego extends JPanel {
 	private void inicializarComponentes() {
 
 		lblCronometro = new JLabel("00", SwingConstants.CENTER);
-		lblCronometro.setFont(new Font("Tahoma", Font.PLAIN, 70));
+		lblCronometro.setFont(new Font("Bell MT", Font.PLAIN, 70));
 		lblCronometro.setBounds(793, 40, 115, 115);
 		lblCronometro.setOpaque(false);
 		lblCronometro.setBackground(new Color(0, 0, 0, 0));
@@ -66,7 +66,7 @@ public class PanelJuego extends JPanel {
 
 		txtA_Pregunta = new JTextArea();
 		txtA_Pregunta.setEditable(false);
-		txtA_Pregunta.setFont(new Font("Bell MT", Font.PLAIN, 38));
+		txtA_Pregunta.setFont(new Font("Bell MT", Font.PLAIN, 45));
 		txtA_Pregunta.setBounds(88, 200, 810, 195);
 		txtA_Pregunta.setOpaque(false);
 		txtA_Pregunta.setForeground(Color.WHITE);
@@ -81,15 +81,15 @@ public class PanelJuego extends JPanel {
 		btnAyuda50.setBackground(new Color(0, 0, 0, 0));
 		btnAyuda50.setBorderPainted(false);
 		add(btnAyuda50);
-		btnOpciones = new JButton[4];
+		btnOpciones= new JButton[4];
 		for (int i = 0; i < 4; i++) {
 			btnOpciones[i] = new JButton();
-			btnOpciones[i].setFont(new Font("Tahoma", Font.PLAIN, 17));
+			btnOpciones[i].setFont(new Font("Bell MT", Font.PLAIN, 17));
 			btnOpciones[i].setOpaque(false);
 			btnOpciones[i].setBorderPainted(false);
 			btnOpciones[i].setBackground(new Color(0, 0, 0, 0));
 			add(btnOpciones[i]);
-		}
+			}
 		btnOpciones[0].setBounds(84, 445, 354, 78);
 		btnOpciones[1].setBounds(550, 445, 354, 78);
 		btnOpciones[2].setBounds(84, 558, 354, 78);

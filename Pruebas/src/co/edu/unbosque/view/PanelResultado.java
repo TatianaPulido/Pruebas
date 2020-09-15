@@ -47,7 +47,7 @@ public class PanelResultado extends JPanel {
 
 		btnVolveraJugar = new JButton();
 		btnVolveraJugar.setBounds(178, 510, 638, 65);
-		btnVolveraJugar.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnVolveraJugar.setFont(new Font("Bell MT", Font.PLAIN, 17));
 		btnVolveraJugar.setOpaque(false);
 		btnVolveraJugar.setBackground(new Color(0, 0, 0, 0));
 		btnVolveraJugar.setBorderPainted(false);
@@ -56,7 +56,7 @@ public class PanelResultado extends JPanel {
 		txtA_VictoriaDerrota = new JTextArea();
 		txtA_VictoriaDerrota.setBounds(150, 250, 693, 192);
 		txtA_VictoriaDerrota.setEditable(true);
-		txtA_VictoriaDerrota.setFont(new Font("Tahoma", Font.PLAIN, 38));
+		txtA_VictoriaDerrota.setFont(new Font("Bell MT", Font.PLAIN, 45));
 		txtA_VictoriaDerrota.setOpaque(false);
 		txtA_VictoriaDerrota.setBackground(new Color(0, 0, 0, 0));
 		txtA_VictoriaDerrota.setForeground(Color.WHITE);

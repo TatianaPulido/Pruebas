@@ -8,6 +8,7 @@ public class Cuestionario implements Serializable{
 	private String pregunta;
 	private String respuestaCorrecta;
 	private String respuestaSeleccionada;
+	private Boolean ayuda; 
 	public Cuestionario(String[] respuestas, String pregunta,
 			String respuestaCorrecta) {
 		this.respuestas = new String [4];
@@ -15,6 +16,7 @@ public class Cuestionario implements Serializable{
 		this.pregunta = pregunta;
 		this.respuestaCorrecta = respuestaCorrecta;
 		respuestaSeleccionada=null;
+		this.ayuda=false;
 	}
 	/**
 	 * @return the respuestas
@@ -73,6 +75,18 @@ public class Cuestionario implements Serializable{
 		return "Cuestionario [respuestas=" + Arrays.toString(respuestas)
 				+ ", pregunta=" + pregunta + ", respuestaCorrecta="
 				+ respuestaCorrecta + "]";
+	}
+	/**
+	 * @return the ayuda
+	 */
+	public Boolean getAyuda() {
+		return ayuda;
+	}
+	/**
+	 * @param ayuda the ayuda to set
+	 */
+	public void setAyuda(Boolean ayuda) {
+		this.ayuda = ayuda;
 	}
 	
 }
