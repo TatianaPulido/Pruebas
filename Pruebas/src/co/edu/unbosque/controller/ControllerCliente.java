@@ -2,6 +2,8 @@ package co.edu.unbosque.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,6 +13,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.swing.JOptionPane;
 
@@ -27,6 +33,8 @@ public class ControllerCliente implements ActionListener {
 
 	private ObjectInputStream in;
 	private DataOutputStream out;
+
+	Timer tim = new Timer();
 
 	public ControllerCliente() {
 		gui = new View();
@@ -77,6 +85,8 @@ public class ControllerCliente implements ActionListener {
 				gui.getPanelJuego().setVisible(true);
 				jugador.setNombre(nombreJugador);
 				jugador.setPuntuacion(0);
+				contarTimer();
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Ingrese su nombre para continuar");
 			}
@@ -84,18 +94,22 @@ public class ControllerCliente implements ActionListener {
 		} else if (evento.getSource().equals(gui.getPanelJuego().getBtnOpciones()[0])) {
 			cuestionario.setRespuestaSeleccionada(gui.getPanelJuego().getBtnOpciones()[0].getText());
 			puntaje();
+			contarTimer();
 
 		} else if (evento.getSource().equals(gui.getPanelJuego().getBtnOpciones()[1])) {
 			cuestionario.setRespuestaSeleccionada(gui.getPanelJuego().getBtnOpciones()[1].getText());
 			puntaje();
+			contarTimer();
 
 		} else if (evento.getSource().equals(gui.getPanelJuego().getBtnOpciones()[2])) {
 			cuestionario.setRespuestaSeleccionada(gui.getPanelJuego().getBtnOpciones()[2].getText());
 			puntaje();
+			contarTimer();
 
 		} else if (evento.getSource().equals(gui.getPanelJuego().getBtnOpciones()[3])) {
 			cuestionario.setRespuestaSeleccionada(gui.getPanelJuego().getBtnOpciones()[3].getText());
 			puntaje();
+			contarTimer();
 
 		} else if (evento.getSource().equals(gui.getPanelJuego().getBtnAyuda50())) {
 			ayuda();
@@ -104,6 +118,7 @@ public class ControllerCliente implements ActionListener {
 			gui.getPanelResultado().setVisible(false);
 			gui.getPanelInicio().setVisible(true);
 			gui.getPanelInicio().getBtnJugar().setText(null);
+			finalizarPartida();
 			iniciarJuego();
 
 		}
@@ -123,31 +138,52 @@ public class ControllerCliente implements ActionListener {
 		String resSele = cuestionario.getRespuestaSeleccionada();
 		String resCorrecta = cuestionario.getRespuestaCorrecta();
 		Boolean ayuda = cuestionario.getAyuda();
+
 		if (resCorrecta.equals(resSele)) {
+
 			if (ayuda) {
 				jugador.setPuntuacion(jugador.getPuntuacion() + 1);
+
 			} else {
 
 				jugador.setPuntuacion(jugador.getPuntuacion() + 3);
 			}
+
 			JOptionPane.showMessageDialog(null, "Correcto");
+//			contarTimer();
+
+		} else if (gui.getPanelJuego().getLblCronometro().getText().equals("00")) {
+
+			JOptionPane.showMessageDialog(null, "Se acabo el tiempo");
+
 		} else {
+
 			JOptionPane.showMessageDialog(null, "Incorrecto");
 
 			if (jugador.getPuntuacion() >= 2) {
 				jugador.setPuntuacion(jugador.getPuntuacion() - 2);
 
 			} else {
+
 				jugador.setPuntuacion(0);
 			}
+//			contarTimer();
+
 		}
+
 		for (int i = 0; i < 4; i++) {
 			gui.getPanelJuego().getBtnOpciones()[i].setEnabled(true);
 		}
+
 		gui.getPanelJuego().getBtnAyuda50().setEnabled(true);
+
 		if (jugador.getNumeroPreguntas() <= 5) {
+
 			try {
+
 				out.writeUTF("Respondi");
+//				contarTimer();
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -213,6 +249,50 @@ public class ControllerCliente implements ActionListener {
 		gui.getPanelResultado().setVisible(true);
 		String texto = "Tu puntaje es de " + jugador.getPuntuacion();
 		gui.getPanelResultado().getTxtA_VictoriaDerrota().setText(texto);
+	}
+
+	public void contarTimer() {
+
+		String timer;
+		int seg;
+
+		TimerTask task = new TimerTask() {
+
+			int seg = 20;
+			String timer = String.valueOf(seg);
+
+			@Override
+			public void run() {
+
+				gui.getPanelJuego().getLblCronometro().setText(Integer.toString(seg));
+
+				if (seg > 9) {
+					gui.getPanelJuego().getLblCronometro().setText(Integer.toString(seg));
+
+				} else if (seg >= 0 && seg < 10) {
+
+					gui.getPanelJuego().getLblCronometro().setText("0" + Integer.toString(seg));
+
+				}
+
+				seg--;
+				if (seg < 00) {
+					tim.cancel();
+					puntaje();
+
+				}
+
+//				for (int i = 0; i < gui.getPanelJuego().getBtnOpciones().length; i++) {
+//					if (!gui.getPanelJuego().getBtnOpciones()[i].isEnabled()) {
+//						tim.cancel();
+//						puntaje();
+//					}
+//				}
+
+			}
+		};
+		tim.schedule(task, 10, 1000);
+
 	}
 
 }

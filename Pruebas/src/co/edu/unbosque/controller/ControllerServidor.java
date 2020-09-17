@@ -43,21 +43,24 @@ public class ControllerServidor {
 							int indice = (int) (Math.random() * 60 + 1);
 							out.writeObject(archivoPreguntas.preguntas(indice));
 							lista.add(indice);
+							System.out.println(indice);
 
 						} else {
 							while (!si) {
 
 								int indice = (int) (Math.random() * 60 + 1);
+								System.out.println(indice);
 
 								for (int j = 0; j < lista.size(); j++) {
 
-									if (!lista.get(i).equals(indice)) {
+									if (lista.get(i) != (indice)) {
 										lista.add(indice);
 										out.writeObject(archivoPreguntas.preguntas(indice));
 										si = true;
 
 									}
 								}
+
 							}
 						}
 
